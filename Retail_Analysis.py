@@ -7,7 +7,7 @@ import seaborn as sns
 # Set plotting style
 sns.set_theme(style="whitegrid")
 
-required_columns = {'order_date', 'delivery_date', 'sales', 'profit', 'region', 'order_id'}
+required_columns = {'order_date', 'delivery_date', 'sales', 'profit', 'region', 'order_id', 'customer_id'}
 
 region_map = {
     '华北': 'North China',
@@ -161,6 +161,7 @@ if __name__ == "__main__":
         
         # 5. Visualize
         plot_dual_axis(region_stats)
+
 
 
 
