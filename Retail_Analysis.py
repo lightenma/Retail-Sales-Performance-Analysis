@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+import matplotlib.ticker as ticker
 
 # --- Configuration & Constants ---
 # Set plotting style
@@ -118,7 +119,6 @@ def plot_dual_axis(stats_df):
     #Turn off the grid on the right axis, since it clutters the view
     ax2.grid(visible=False)
 
-    import matplotlib.ticker as ticker
     ax1.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, p: f'${x:,.0f}'))
     ax2.yaxis.set_major_formatter(ticker.PercentFormatter(1.0, decimals=1))
 
@@ -138,7 +138,7 @@ def plot_dual_axis(stats_df):
     # Display the plot
     plt.show()
 
-    # --- Main Analysis Flow ---
+# --- Main Analysis Flow ---
 if __name__ == "__main__":
     
     file_path = 'transaction_data.csv'
@@ -163,6 +163,7 @@ if __name__ == "__main__":
         
         # 5. Visualize
         plot_dual_axis(region_stats)
+
 
 
 
