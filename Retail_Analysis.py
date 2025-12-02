@@ -6,7 +6,7 @@ import seaborn as sns
 # Set plotting style
 sns.set_theme(style="whitegrid")
 
-def load_and_check_data(filepath, encoding='utf-8'):
+def load_and_check_data(filepath):
     """
     Reads CSV and performs basic validation
     """
@@ -158,3 +158,4 @@ if __name__ == "__main__":
         
         # 5. Visualize
         plot_dual_axis(region_stats)
+
