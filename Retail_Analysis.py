@@ -3,8 +3,21 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+# --- Configuration & Constants ---
 # Set plotting style
 sns.set_theme(style="whitegrid")
+
+REQUIRED_COLUMNS = {'order_date', 'delivery_date', 'sales', 'profit', 'region', 'order_id'}
+
+REGION_MAP = {
+    '华北': 'North China',
+    '华东': 'East China',
+    '华南': 'South China',
+    '华中': 'Central China',
+    '东北': 'Northeast',
+    '西南': 'Southwest',
+    '西北': 'Northwest'
+}
 
 def load_and_check_data(filepath):
     """
@@ -13,8 +26,7 @@ def load_and_check_data(filepath):
     try:        
         df = pd.read_csv(filepath)
         
-        # Check if essential columns are missing
-        required_columns = ['order_date', 'delivery_date', 'sales', 'profit', 'region', 'order_id']
+        # Check if essential columns are missing        
         if not set(required_columns).issubset(df.columns):
             print(f"Error: Missing columns. Expected {required_columns}")
             return None
@@ -38,24 +50,15 @@ def clean_data(df):
     df['delivery_date'] = pd.to_datetime(df['delivery_date'], errors='coerce')
     
     # 2. Filter out missing data
-    df = df.dropna(subset=['order_date', 'delivery_date', 'sales'])
+    df = df.dropna(subset=['order_date', 'delivery_date', 'sales', 'customer_id'])
     
     # 3. Filter out returns (negative sales) to calculate proper margins
     df = df[df['sales'] > 0]
     
-    # 4. Clean Customer ID (Splits by '_' and takes the last part)
+    # 4. ID Parsing (Splits by '_' and takes the last part)
     df['customer_id'] = df['customer_id'].astype(str).str.split('_').str[-1]
 
-    # 5. Translate Regions from Chinese to English
-    region_map = {
-        '华北': 'North China',
-        '华东': 'East China',
-        '华南': 'South China',
-        '华中': 'Central China',
-        '东北': 'Northeast',
-        '西南': 'Southwest',
-        '西北': 'Northwest'
-    }
+    # 5. Translate Regions
     df['region'] = df['region'].map(region_map).fillna('Other')
 
     return df
@@ -158,4 +161,5 @@ if __name__ == "__main__":
         
         # 5. Visualize
         plot_dual_axis(region_stats)
+
 
