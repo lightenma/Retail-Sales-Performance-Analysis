@@ -156,11 +156,14 @@ if __name__ == "__main__":
         
         # 4. Output Results
         print("\n--- Regional Summary ---")
-        # Format columns for better readability
-        print(region_stats[['region', 'total_sales', 'avg_delay', 'weighted_margin']])
+        pd.set_option('display.float_format', lambda x: '{:,.2f}'.format(x))
+        pd.set_option('display.expand_frame_repr', False)
+        display_table = region_stats.set_index('region')
+        print(display_table[['total_sales', 'avg_delay', 'weighted_margin']])
         
         # 5. Visualize
         plot_dual_axis(region_stats)
+
 
 
 
